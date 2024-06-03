@@ -1,9 +1,21 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 const Signup = () => {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(name, email, password);
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div className="bg-white p-3 rounded w-25">
         <h2>Register</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name">
               <strong>Name</strong>
@@ -14,6 +26,7 @@ const Signup = () => {
               autoComplete="off"
               name="name"
               className="form-control rounded-0"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -26,6 +39,7 @@ const Signup = () => {
               autoComplete="off"
               name="email"
               className="form-control rounded-0"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -38,13 +52,14 @@ const Signup = () => {
               autoComplete="off"
               name="password"
               className="form-control rounded-0"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Register
           </button>
           <p>
-            Already Have an Account? <a href="./login">Login</a>
+            Already Have an Account? <Link to="/login">Login</Link>
           </p>
         </form>
       </div>
