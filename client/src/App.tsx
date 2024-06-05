@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Signup from "./Signup";
-import LandingPage from "./LandingPage";
-import Login from "./Login";
-import LinkButtonGenPage from "./LinkButtonGenPage";
+import Signup from "./components/Signup";
+import LandingPage from "./components/LandingPage";
+import Login from "./components/Login";
+import LinkButtonGenPage from "./components/LinkButtonGenPage";
 
 function App() {
   return (
