@@ -1,8 +1,14 @@
+import "./LinkButtonGenPage.css";
+import Navbar from "./Navbar";
+
 const LinkButtonGenPage = () => {
   return (
-    <div className="bg-secondary vh-100">
-      <button className="btn btn-success p-100">Add a new link</button>
-    </div>
+    <>
+      <Navbar />
+      <div className="">
+        <button className="btn btn-success btn-add-new">Add a new link</button>
+      </div>
+    </>
   );
 };
 
