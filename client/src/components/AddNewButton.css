@@ -1,0 +1,18 @@
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 24px; /* Adjust to make space for the arrow */
+}
+
+.dropdown-wrapper .dropdown-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
