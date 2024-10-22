@@ -1,16 +1,35 @@
-### 1. **Performance Against Objectives**
-   Since joining Barclays in August 2024, I have made significant contributions toward driving simplicity, efficiency, and enhancing user experience in various projects:
-   - Developed multiple reusable Angular components, such as `app-input`, `app-dropdown`, and `app-toast`, to streamline user interactions and reduce repetitive code, contributing to operational efficiency.
-   - Focused on building a flexible `p-table` wrapper that enabled dynamic data rendering and comparison, thus improving the user experience while dealing with audit data and ensuring better data transparency.
-   - Played a crucial role in developing dynamic side navigation and hierarchical data presentation using tree nodes, making data more accessible and intuitive for users.
-   - Actively promoted new ideas, such as introducing reasoning benchmarks and more effective validation processes, leading to better problem-solving and innovative approaches in our projects.
-   - My efforts align with Barclays' global objectives by improving efficiency, building precision in operations, and always striving for world-class service delivery.
+### Values and Mindsets for All Colleagues
+**Respect:**  
+- I’ve shown respect by actively listening to feedback from peers and incorporating suggestions into the development of reusable components like `app-input` and `app-dropdown`. This has helped build a more collaborative environment and resulted in better outcomes for the team.
+- When developing the `p-table` wrapper for audit data, I made sure to align with user needs, ensuring that the component was user-friendly and met accessibility standards.
 
-### 2. **What Has Been Done to Manage Risks and Strengthen Controls**
-   - Implemented a robust system for data validation using reactive forms in Angular, significantly reducing the likelihood of data entry errors and enhancing data integrity.
-   - Developed a comprehensive audit trail mechanism within the `p-table`, enabling precise tracking of changes made by users (maker-checker system) and ensuring accountability for data modifications.
-   - Created a reusable validation system across different components, ensuring that any input-related errors are flagged and handled promptly, thus minimizing operational risks.
-   - Ensured that all changes to key components are thoroughly tested, and feedback loops are incorporated to continuously improve the quality and reliability of the solutions.
-   - The transition to using structured services for API handling in `rda` ensures future readiness, minimizing potential risks related to API integration and data flow management.
+**Integrity:**  
+- Demonstrated integrity by ensuring transparency and accuracy in handling sensitive audit data, where old and new values need to be tracked. This involved implementing a maker-checker system and ensuring the highest standards in managing the data flow.
+- Always adhered to best practices in coding and project documentation, ensuring that my work aligns with Barclays' ethical standards.
 
-These actions have not only improved the efficiency of the processes but also established a strong framework for managing risks and ensuring compliance with Barclays' standards for precision and control.
+**Service:**  
+- Focused on delivering solutions that provide exceptional service, like the dynamic side navigation and the `p-toast` component, which significantly improved user experience and efficiency.
+- Provided proactive support to colleagues in adopting new components and frameworks, ensuring a smooth transition and better user satisfaction.
+
+**Excellence:**  
+- Consistently aimed for high standards by optimizing existing processes, such as automating validation logic using reactive forms in Angular, which has greatly improved data accuracy.
+- Continuously sought ways to improve my own skills and stay updated with new technologies, ensuring that my contributions are always aligned with industry best practices.
+
+### Lead Behaviours for Leaders
+**Empower:**  
+- Supported team members by sharing knowledge about creating reusable components and services, helping them to build similar components independently.
+- Fostered a collaborative environment by organizing knowledge-sharing sessions on best practices in Angular development, encouraging others to adopt a more efficient and modular approach in their projects.
+
+**Steward:**  
+- Took responsibility for implementing a robust data validation mechanism, ensuring that our applications maintain a high standard of data integrity, which aligns with Barclays' goals of precision and risk management.
+- Played a key role in developing controls for audit data management, making sure that changes are tracked accurately and that users are accountable for their inputs.
+
+**Simplify:**  
+- Simplified processes by building generic and reusable components like `app-input` and `app-dropdown`, allowing for easier and faster integration of new features into existing applications.
+- Focused on removing redundant steps in our development process, like creating dynamic structures for side navigation that adjust automatically based on user input, making our projects more efficient and easier to maintain.
+
+**Inspire:**  
+- Encouraged my peers to think creatively and embrace new approaches, such as introducing dynamic dialog boxes with user-defined styles, to improve user interaction.
+- Inspired the team to challenge existing methods by suggesting and implementing more efficient API handling processes, setting an example for continuous improvement and innovation.
+
+These comments reflect how I have consistently worked to embody Barclays’ values and demonstrate leadership through practical actions, ensuring that my contributions align with both the company's objectives and the broader vision for continuous improvement.
