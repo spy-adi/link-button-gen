@@ -1,31 +1,70 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { PaymentService } from './payment.service'; // Adjust the path as per your project structure
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import InformationTile from '../InformationTile.native';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AccessGuard implements CanActivate {
-  constructor(private paymentService: PaymentService, private router: Router) {}
+describe('InformationTile Component', () => {
+  const baseProps = {
+    testID: 'info-tile',
+    title: 'Test Title',
+    description: 'This is a description',
+    footerDescription: ['Footer content'],
+    actions: [
+      {
+        text: 'Action',
+        url: 'https://example.com',
+      },
+    ],
+    items: [
+      {
+        title: 'Item Title',
+        description: 'Item Description',
+        icon: 'icon-name',
+        index: 0,
+      },
+    ],
+    image: {
+      contentKey: 'icon-name',
+      altText: 'Sample image',
+    },
+    contentHost: 'https://images.example.com',
+    horizontalPadding: true,
+    actionCallback: jest.fn(),
+    actionCallbackAlt: jest.fn(),
+  };
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
-    // Check access for PRDM
-    if (this.paymentService.hasAccess('prdm')) {
-      this.router.navigate(['/rda/prdm']);
-      return false; // Prevent further navigation since we are redirecting
-    }
+  it('renders title and description', () => {
+    const { getByText } = render(<InformationTile {...baseProps} />);
+    expect(getByText('Test Title')).toBeTruthy();
+    expect(getByText('This is a description')).toBeTruthy();
+  });
 
-    // Check access for Approvals
-    if (this.paymentService.hasAccess('approvals')) {
-      this.router.navigate(['/rda/approvals']);
-      return false; // Prevent further navigation
-    }
+  it('renders footer description if provided', () => {
+    const { getByText } = render(<InformationTile {...baseProps} />);
+    expect(getByText('Footer content')).toBeTruthy();
+  });
 
-    // If no access, stay on the same page or route
-    return false;
-  }
-}
+  it('renders actions when available', () => {
+    const { getByTestId } = render(<InformationTile {...baseProps} />);
+    expect(getByTestId('info-tile-icon-chevron-right')).toBeTruthy();
+  });
+
+  it('does not render image if contentKey is missing', () => {
+    const { queryByTestId } = render(
+      <InformationTile {...baseProps} image={{ contentKey: '' }} />
+    );
+    expect(queryByTestId('info-tile-icon-name')).toBeNull();
+  });
+
+  it('calls actionCallback when pressed', () => {
+    const { getByRole } = render(<InformationTile {...baseProps} />);
+    const linkButton = getByRole('link');
+    fireEvent.press(linkButton);
+    expect(baseProps.actionCallback).toHaveBeenCalled();
+  });
+
+  it('renders item list correctly', () => {
+    const { getByText } = render(<InformationTile {...baseProps} />);
+    expect(getByText('Item Title')).toBeTruthy();
+    expect(getByText('Item Description')).toBeTruthy();
+  });
+});
