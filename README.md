@@ -1,187 +1,180 @@
-Absolutely! Here’s the final Confluence article version with all your points integrated — focusing on unit test case creation using GitLab Duo, handling failure cases, mutation improvement, and practical constraints within Barclays GitLab Duo environment.
+Here’s a comprehensive Confluence article draft you can use for Mutation Testing in ReactJS/React Native using Stryker. It covers every aspect from setup to interpreting reports, including Node 18 compatibility, installation, configuration, and usage.
 
 ⸻
 
-🧪 Writing & Updating Unit Test Cases Using GitLab Duo (React / React Native / Any Language)
+🧬 Mutation Testing in ReactJS/React Native with Stryker
 
-📌 Objective
+📌 Overview
 
-This article explains how to create and update unit test cases using GitLab Duo for React, React Native, or any language, with an emphasis on:
-	•	Increasing test coverage
-	•	Improving mutation score
-	•	Handling AI limitations within Barclays GitLab
-	•	Ensuring test consistency and efficiency
+Mutation testing is a powerful technique to evaluate the effectiveness of your unit tests. Instead of just checking if code runs without errors, mutation testing checks if your tests can catch intentional code changes (mutants) that simulate potential bugs.
+
+We will be using Stryker Mutation Testing — a powerful tool that supports JavaScript, TypeScript, ReactJS, and React Native projects.
 
 ⸻
 
-🧠 What is GitLab Duo?
-
-GitLab Duo is GitLab’s AI-powered assistant that helps developers:
-	•	Write unit and integration tests
-	•	Identify untested branches or mutators
-	•	Suggest improvements to failing or weak tests
-	•	Automate repetitive testing workflows
+✅ Prerequisites
+	•	Node.js: v18.x
+	•	Package Manager: npm or yarn
+	•	Project Type: ReactJS or React Native
+	•	Test Runner: Jest (React Native default) or any supported one
 
 ⸻
 
-✅ Best Practice: Give GitLab Duo a Reference Format First
+⚙️ Installation
 
-❗ Always start by sharing a sample test case format that you want Duo to follow.
+1. Install Stryker CLI globally (optional)
 
-This ensures consistency and avoids random structure or missing imports in generated tests.
+npm install -g stryker-cli
 
-Example Prompt:
+2. Install Stryker locally in your project
 
-Here is the test format I use. Please follow this structure when writing all future test cases.
+Use the Stryker preset for Jest if you’re using React or React Native (Jest is the common test runner):
 
-Then paste:
+npm install --save-dev @stryker-mutator/core @stryker-mutator/jest-runner jest
 
-// SampleTest.test.tsx
-import { render } from '@testing-library/react';
-import { SampleComponent } from './SampleComponent';
+If you’re using TypeScript, also install:
 
-describe('SampleComponent', () => {
-  it('should render correctly', () => {
-    const { getByText } = render(<SampleComponent />);
-    expect(getByText('Hello')).toBeTruthy();
-  });
-});
+npm install --save-dev @stryker-mutator/typescript-checker
 
 
 ⸻
 
-✍️ Writing Unit Tests With Duo
+🛠️ Configuration
 
-Steps:
-	1.	Open the source file in GitLab.
-	2.	Activate GitLab Duo Chat.
-	3.	Paste a prompt like:
+Run this command to create the config file:
 
-Write Jest unit tests for this component. Follow the format I shared earlier.
+npx stryker init
 
+This will ask questions and create a stryker.config.js or stryker.conf.json file.
 
-	4.	GitLab Duo will generate matching test cases.
-	5.	Run them locally.
+Sample stryker.config.js for React/React Native with Jest:
+
+/**
+ * @type {import('@stryker-mutator/api/core').StrykerOptions}
+ */
+module.exports = {
+  mutator: {
+    name: 'javascript',
+  },
+  testRunner: 'jest',
+  jest: {
+    projectType: 'custom',
+    config: require('./jest.config.js'),
+  },
+  reporters: ['html', 'clear-text', 'progress'],
+  coverageAnalysis: 'off',
+  mutate: ['src/**/*.js', '!src/**/*.test.js'], // exclude test files
+  thresholds: {
+    high: 80,
+    low: 60,
+    break: 50,
+  },
+};
+
+Explanation of config:
+
+Field	Description
+mutator.name	Which language mutator to use (e.g., javascript, typescript)
+testRunner	Usually jest for React projects
+jest.config	Path to your Jest config file
+mutate	Files to mutate. Avoid mutating test files
+reporters	Output formats: HTML, terminal (clear-text), etc.
+coverageAnalysis	Often set to 'off' for Jest (to avoid issues)
+thresholds	Define mutation score alerts
+
 
 ⸻
 
-🛠 If Generated Test Cases Fail
+▶️ Running Mutation Tests
 
-If Duo-generated tests fail, follow this retry loop:
-
-⛔ Step 1: Test Fails
-
-Paste the exact error from your terminal.
-
-💬 Prompt:
-
-The following test case failed. Here's the test and the error. Fix the test.
-
-Then paste:
-	•	The failing test case
-	•	The error output
-
-📌 Why?
-
-Providing the exact error message helps Duo pinpoint the mistake — especially with type errors, undefined mocks, or broken logic.
-
-⸻
-
-🧬 Mutation Testing Support
-
-Tools:
-	•	JS/TS: StrykerJS
-	•	Java: Pitest
-	•	Python: MutPy
-
-Run:
+Run all tests with mutation:
 
 npx stryker run
 
-If the mutation score does not improve:
+Run mutation test on a specific file:
 
-⛔ Step 1: Score Fails to Improve
+npx stryker run --mutate src/components/Button.js
 
-💬 Prompt:
+You can also add an npm script:
 
-This test case did not increase mutation score. The following conditional mutator is still surviving. Here's the file and test. Improve it to kill the mutant.
-
-Then paste:
-	•	The function/file under test
-	•	The test case
-	•	The mutation report or error
-(e.g., ConditionalExpressionMutator survived in function X)
-
-⸻
-
-⚠️ GitLab Duo Limitations at Barclays
-
-Due to GitLab Duo limits in Barclays, keep in mind:
-	•	Duo can handle limited file size / content at once
-	•	It’s best to clearly say up front:
-“I will send the file, the test case, and the error separately.”
-	•	Send:
-	1.	Component/function file
-	2.	Existing test case
-	3.	Error output or mutation result
-
-This avoids context cutoff or unprocessed data.
-
-⸻
-
-💡 Prompt Templates
-
-Scenario	Prompt
-Write tests	Write unit tests for this function. Use the format I provided.
-Fix broken test	This test is failing. Fix it based on this error.
-Mutation survived	This test didn’t improve mutation score. Fix it to kill this mutator: [mutator info].
-Full loop	Here’s the file, current test, and the mutation error. Improve test to kill the mutant.
+"scripts": {
+  "mutation": "stryker run"
+}
 
 
 ⸻
 
-📂 File Structure & Commit Best Practices
-	•	Place test files alongside source files using .test.js, .spec.tsx, etc.
-	•	Prefix commits with [test] or [mutation] for traceability.
-	•	Run tests and mutation checks in CI (.gitlab-ci.yml):
+📊 Understanding Stryker Reports
 
-test:
-  script:
-    - npm run test:coverage
-    - npx stryker run
-  coverage: '/All files\s*\|\s*(\d+%)/'
+Stryker generates multiple reports in the reports/mutation folder.
+
+HTML Report
+
+Open:
+
+open reports/mutation/mutation.html
+
+Key Metrics:
+	•	Mutation Score: Percentage of mutants killed (higher is better)
+	•	Killed Mutants: Caught by tests ✅
+	•	Survived Mutants: Not caught by any test ❌
+	•	No Coverage: Code not covered by any test at all ⚠️
+	•	Timeout / Ignored: Tests that failed due to timeout or were ignored
+
+Goal: Mutation Score > 80%. Improve tests for “survived” mutants.
+
+⸻
+
+🧪 Mutation Operators (Examples)
+
+Mutation	What It Does	Example
+Arithmetic Operator Replacement	+ → -	a + b → a - b
+Conditional Boundary	> → >=	a > b → a >= b
+Logical Operator Replacement	&& → `	
+Equality Operator	=== → !==	a === b → a !== b
 
 
 ⸻
 
-📌 Final Tips
+🚨 Tips & Troubleshooting
+	•	Use coverageAnalysis: 'off' with Jest to avoid performance issues.
+	•	If using React Native, ensure metro bundler doesn’t interfere with file watching.
+	•	If Stryker crashes due to memory: try limiting files with mutate.
 
-Tip	Why
-Start with a test format	Helps Duo maintain structure
-Send error logs	Enables precise debugging
-Specify failed mutator	AI can target exact logic
-Break large input into parts	Barclays Duo handles smaller chunks better
+⸻
+
+🔄 Example Workflow for React Component
+	1.	Create a component Button.js and test file Button.test.js
+	2.	Configure Stryker as above
+	3.	Run:
+
+npx stryker run --mutate src/components/Button.js
+
+
+	4.	Open report and fix any survived mutants by enhancing test cases.
+
+⸻
+
+📦 Optional Plugins
+
+You can explore other plugins if needed:
+
+npm install --save-dev @stryker-mutator/html-reporter @stryker-mutator/typescript-checker
 
 
 ⸻
 
 📚 References
-	•	GitLab Duo Documentation
-	•	Stryker Mutation Testing
-	•	Jest
-	•	React Testing Library
+	•	Stryker Docs
+	•	Stryker for Jest
+	•	Mutation Testing Intro
 
 ⸻
 
-✅ Summary
+💬 Summary
 
-By using GitLab Duo smartly with references, structured prompts, and feedback loops, you can:
-	•	Rapidly build high-quality test suites
-	•	Improve both coverage and mutation resilience
-	•	Work effectively within AI assistant limitations
-
-🎯 AI helps, but human context makes it powerful. Feed Duo the right input for the best output.
+Mutation testing helps you verify the strength of your unit tests beyond code coverage. Stryker makes it seamless to integrate into React and React Native projects with Jest, giving deep insights into untested or weakly tested logic. Integrate it into your CI or run regularly to maintain test quality.
 
 ⸻
 
-Would you like a downloadable .confluence or .docx version of this page for upload, or a collapsible version using Confluence macros?
+Would you like this in markdown, Confluence wiki format, or want it converted into a downloadable PDF or .confluence XML?
